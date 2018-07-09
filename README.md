@@ -14,7 +14,7 @@
 cd到FDTops.py脚本所在目录，苹果自带的Python版本是2.7，你首先得安一个Python3
 
 ~~~shell
-python3 FDTops.py（脚本命令位置） /Users/yiche/Code/yiche/yiche4iOS/autoPrice/App/Mine/MessageCenter（目标类艘在目录）  replace（操作符，目前只支持replace 和add） YC（原始前缀名） FD（目标前缀名） 
+python3 FDTops.py（脚本命令位置） /Users/yiche/Code/yiche/yiche4iOS/autoPrice/App/Mine/MessageCenter（目标类所在目录）  replace（操作符，目前只支持replace 和add） YC（原始前缀名） FD（目标前缀名） 
 
 python3 FDTops.py /Users/yiche/Code/yiche/yiche4iOS/autoPrice/App/Mine/MessageCenter  replace YC FD 
 
