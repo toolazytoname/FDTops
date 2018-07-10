@@ -1,3 +1,4 @@
+# coding=utf-8
 import os,sys
 
 def obtan_dir_names(work_dir):
@@ -8,9 +9,10 @@ def obtan_dir_names(work_dir):
     '''
     parent_set = set()
     for parent, dirnames, filenames in os.walk(work_dir):
-        if parent.endswith('/'):
+        #  filenames.__len__() > 0 避免文件夹下面没有文件
+        if parent.endswith('/') and filenames.__len__() > 0:
             parent_set.add('{0}*'.format(parent))
-        else:
+        elif filenames.__len__() > 0:
             parent_set.add('{0}/*'.format(parent))
     parent_string = ' '.join(str(parent) for parent in parent_set)
     return parent_string
@@ -25,7 +27,8 @@ def obtain_class_name_set(work_dir):
     class_name_set = set()
     for parent, dirnames, filenames in os.walk(work_dir):
         for filename in filenames:
-            if filename.endswith('.h'):
+            # 有的时候文件夹内只有xib文件，所以加上这个条件
+            if filename.endswith('.h') or filename.endswith('.xib'):
                 (shortname, extension) = os.path.splitext(filename)
                 class_name_set.add(shortname)
     return class_name_set
@@ -90,7 +93,7 @@ def obtain_file_path_set(work_dir):
     file_path_set = set()
     for parent, dirnames, filenames in os.walk(work_dir):
         for filename in filenames:
-            if filename.endswith('.h') or filename.endswith('.m'):
+            if filename.endswith('.h') or filename.endswith('.m') or filename.endswith('.xib'):
                 file_path = os.path.join(parent, filename)
                 file_path_set.add(file_path)
     return file_path_set
@@ -153,7 +156,8 @@ if __name__=='__main__':
     class_name_set = obtain_class_name_set(work_dir)
     class_rename_dic = obtain_class_rename_dic(operation, prefix, des_prefix, class_name_set)
     save_tops_file(work_dir, class_rename_dic)
-    run_shell(work_dir, dir_names)
+    if class_name_set.__len__() > 0:
+        run_shell(work_dir, dir_names)
 
     file_path_set = obtain_file_path_set(work_dir)
     file_path_dic = obtain_filepath_dic(class_rename_dic, file_path_set)
