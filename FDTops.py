@@ -111,10 +111,13 @@ def rename_class_handle(class_rename_dic, file_path_set):
         with open(file_path, "r+") as file:
             read_data = file.read()
             file.seek(0, 0)
-            # result_data = ''
             for key, value in class_rename_dic.items():
+                # 此处可以增加一个循环
                 original_string = '"{0}.h"'.format(key)
                 des_string = '"{0}.h"'.format(value)
+                read_data = read_data.replace(original_string, des_string)
+                original_string = '"{0}"'.format(key)
+                des_string = '"{0}"'.format(value)
                 read_data = read_data.replace(original_string, des_string)
             file.write(read_data)
 
