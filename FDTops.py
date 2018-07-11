@@ -28,7 +28,8 @@ def obtain_class_name_set(work_dir):
     for parent, dirnames, filenames in os.walk(work_dir):
         for filename in filenames:
             # 有的时候文件夹内只有xib文件，所以加上这个条件
-            if filename.endswith('.h') or filename.endswith('.xib'):
+            # 发现有的文件只有.m，所以加上.m，考虑是否要和obtain_file_path_set 中的条件统一
+            if filename.endswith('.h') or filename.endswith('.m') or filename.endswith('.xib'):
                 (shortname, extension) = os.path.splitext(filename)
                 class_name_set.add(shortname)
     return class_name_set
@@ -132,9 +133,10 @@ def obtain_filepath_dic(class_rename_dic, file_path_set):
     for file_path in file_path_set:
         (file_path_dirname, file_path_fileName) = os.path.split(file_path)
         (shortname, extension) = os.path.splitext(file_path_fileName)
-        new_file_name = '{0}{1}'.format(class_rename_dic[shortname], extension)
-        new_file_path = os.path.join(file_path_dirname, new_file_name)
-        file_path_dic[file_path] = new_file_path
+        if class_rename_dic.__contains__(shortname):
+            new_file_name = '{0}{1}'.format(class_rename_dic[shortname], extension)
+            new_file_path = os.path.join(file_path_dirname, new_file_name)
+            file_path_dic[file_path] = new_file_path
     return file_path_dic
 
 def os_rename(file_path_dic):
