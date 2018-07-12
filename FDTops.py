@@ -121,7 +121,7 @@ def rename_class_handle(class_rename_dic, file_path_set):
                 original_string = '"{0}"'.format(key)
                 des_string = '"{0}"'.format(value)
                 read_data = read_data.replace(original_string, des_string)
-                #为了兼顾，/YCHomePageHeaderView" owner:self options:nil].firstObject;这种场景
+                # 为了兼顾，/YCHomePageHeaderView" owner:self options:nil].firstObject;这种场景
                 original_string = '/{0}"'.format(key)
                 des_string = '/{0}"'.format(value)
                 read_data = read_data.replace(original_string, des_string)
